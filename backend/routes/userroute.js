@@ -6,20 +6,20 @@ const userRoute=express.Router()
 require("dotenv").config()
 const {client}=require("../config/redis")
 const {blackmodel}=require("../models/blaclkistmodel")
-
+const nodemailer=require("nodemailer")
 userRoute.post("/register",async(req,res)=>{
     try {
         const {name,email,password}=req.body
-        const userfound=await usermodel.findone({email})
+        const userfound=await usermodel.findOne({email})
         if(userfound){
-            res.send("User Already Present Please Login")
+          return  res.send({"msg":"User Already Present Please Login"})
         }
 const hashpassword=bcrypt.hashSync(password,5)
 const newuser=new usermodel({name,email,password:hashpassword})
 const saveuser=await newuser.save()
 console.log(saveuser)
 verificationmail(name,email,saveuser._id)
-res.status(200).send({msg:"User registration Successfull,verify your mail"})
+res.status(200).send({"msg":"User registration Successfull,verify your mail"})
 
     } catch (error) {
         console.log(error)
@@ -52,6 +52,7 @@ userRoute.post("/login",async(req,res)=>{
 
         client.set('token', token, 'EX', 21600);
         client.set('refreshtoken', refreshtoken, 'EX', 86400);
+        res.status(200).send({"msg":"Login successfull!!","token":token,user})
     } catch (error) {
         console.log(error)
         res.status(400).send({"msg":"Login failed!!"})

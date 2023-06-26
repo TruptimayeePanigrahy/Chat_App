@@ -32,7 +32,29 @@ background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(158,253,45,1) 100%
     <div id="nav">
         <a href="">Home</a>
         <a href="#">About</a>
-        <a href="./signup.html">Signp/Login</a>
+        <a id="sign" href="./signup.html">Signp/Login</a>
     </div>
 </body>
 </html>
+
+<script>
+    let navbar=document.getElementById("nav")
+    let sign=document.getElementById("sign")
+    let token=localStorage.getItem("token") || ""
+    let name=localStorage.getItem("name") || ""
+    let logout
+if(token){
+sign.innerText=name
+logout=document.createElement("button")
+logout.innerText="Logout"
+nav.append(logout)
+
+}
+
+logout.addEventListener("click",()=>{
+    sign.innerText="signup/login"
+
+    localStorage.clear()
+    navbar.removeChild(logout)
+})
+</script>

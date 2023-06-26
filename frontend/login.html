@@ -90,7 +90,7 @@
           <input type="password" id="password" placeholder="Enter your password" required>
         </div>
         <div class="form-group">
-          <button type="submit">Login</button>
+          <button  id="btn" type="submit">Login</button>
         </div>
       </form>
       <div class="signup-link">
@@ -101,3 +101,38 @@
 </body>
 
 </html>
+
+<script>
+const button=document.getElementById("btn")
+button.addEventListener("click",(e)=>{
+  e.preventDefault()
+  let obj={
+    email:document.getElementById("email").value,
+    password:document.getElementById("password").value
+  }
+fetch("http://localhost:3300/user/login",{
+  method:"POST",
+  headers:{
+    "content-type":"application/json"
+  },
+  body:JSON.stringify(obj)
+}).then((res)=>{
+  return res.json()
+})
+
+.then((res)=>{
+  console.log(res)
+  if(document.getElementById("email").value!="" && document.getElementById("password").value!=""){
+    alert("Login successfull")
+    localStorage.setItem("token", res.token);
+            localStorage.setItem("name", res.user.name);
+    window.location.href = "index.html"
+  }else{
+    alert("please fill the details")
+  }
+}).catch((err)=>{
+  console.log(err)
+})
+
+})
+</script>
