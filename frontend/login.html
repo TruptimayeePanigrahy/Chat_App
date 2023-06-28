@@ -110,29 +110,35 @@ button.addEventListener("click",(e)=>{
     email:document.getElementById("email").value,
     password:document.getElementById("password").value
   }
-fetch("http://localhost:3300/user/login",{
-  method:"POST",
-  headers:{
-    "content-type":"application/json"
+  fetch("http://localhost:3300/user/login", {
+  method: "POST",
+  headers: {
+    "content-type": "application/json"
   },
-  body:JSON.stringify(obj)
-}).then((res)=>{
-  return res.json()
+  body: JSON.stringify(obj)
 })
-
-.then((res)=>{
-  console.log(res)
-  if(document.getElementById("email").value!="" && document.getElementById("password").value!=""){
-    alert("Login successfull")
-    localStorage.setItem("token", res.token);
-            localStorage.setItem("name", res.user.name);
-    window.location.href = "index.html"
-  }else{
-    alert("please fill the details")
-  }
-}).catch((err)=>{
-  console.log(err)
-})
+  .then((res) => {
+    if (res.ok) {
+      return res.json(); 
+    } else {
+      throw new Error("Login failed"); 
+    }
+  })
+  .then((data) => {
+    console.log(data);
+    if (document.getElementById("email").value !== "" && document.getElementById("password").value !== "") {
+      alert("Login successful");
+      localStorage.setItem("token",data.token)
+      localStorage.setItem("name",data.user.name)
+      window.location.href = "http://localhost:4500/"; 
+    } else {
+      alert("Please fill in the details");
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+    alert("An error occurred during login");
+  });
 
 })
 </script>
