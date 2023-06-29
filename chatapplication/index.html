@@ -18,7 +18,7 @@
     <div class="brand">
         <!-- <img src="" alt="" srcset=""> -->
         <h1>chat application</h1>
-        <button id="logout">Logout</button>
+        <button id="logout">Leave</button>
     </div>
     <div class="msgarea">
         <!-- <div class="incoming msg">
@@ -40,3 +40,25 @@
     <script src="/client.js"></script>
 </body>
 </html>
+<script>
+    let leave=document.getElementById("logout")
+
+    let name=localStorage.getItem("name")
+    let token=localStorage.getItem("token")
+
+    leave.addEventListener("click",(e)=>{
+        e.preventDefault()
+        fetch("http://localhost:3300/user/logout")
+        .then((res)=>{
+            return res.json()
+        })
+.then((data)=>{
+    console.log(data)
+    window.location.href="http://127.0.0.1:5500/frontend/index.html"
+    localStorage.clear()
+})
+.catch((err)=>{
+    console.log(err)
+})
+    })
+</script>
