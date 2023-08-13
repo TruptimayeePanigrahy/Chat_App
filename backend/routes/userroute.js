@@ -128,14 +128,12 @@ userRoute.get("/verify",async(req,res)=>{
     }
 })
 
-
-
-
-
-
-
-
-
-
+userRoute.get("/getusername", async (req, res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+})
 
 module.exports={userRoute}

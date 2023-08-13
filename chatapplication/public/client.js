@@ -1,10 +1,11 @@
 const socket = io();
-let username;
+let username = sessionStorage.getItem("name")
+console.log(username)
 let msgarea=document.querySelector(".msgarea")
 
-do {
-    username = prompt("enter your name");
-} while (!username);
+// do {
+//     username = prompt("enter your name");
+// } while (!username);
 // let msg = document.getElementById("input");
 // msg.addEventListener("keyup", (e) => {
 //   if (e.key == "Enter") {

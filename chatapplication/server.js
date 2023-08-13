@@ -20,9 +20,6 @@ io.on("connection",(socket)=>{
     })
 })
 
-
-
-
 http.listen(4500,()=>{
     console.log("server running")
 })
